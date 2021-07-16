@@ -3,19 +3,21 @@
     "template": {
       "actions": [
         {
-          "text": "สรรพคุณ",
+          
           "type": "message",
-          "label": "สรรพคุณ"
+          "label": "สรรพคุณ",
+          "text": "ดีปลี-สรรพคุณ"
         },
         {
           "label": "วิธีนำไปใช้",
-          "text": "วิธีนำไปใช้",
-          "type": "message"
+           "type": "message",
+          "text": "ดีปลี-วิธีนำไปใช้"
         },
         {
           "type": "message",
           "label": "รายละเอียด",
-          "text": "รายละเอียด"
+          "text": "ดีปลี-รายละเอียด",
+        
         }
       ],
       "text": "กรุณาเลือก",
