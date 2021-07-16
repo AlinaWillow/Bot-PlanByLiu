@@ -1,0 +1,70 @@
+var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/14OBaxtkFxYuVOG5mEG-i0inD34-_Pv-8xCemqvFxlW0/edit");
+var sheet = ss.getSheetByName("sheet");
+function doPost(e) {
+   
+  var data = JSON.parse(e.postData.contents)
+  var userMsg = data.originalDetectIntentRequest.payload.data.message.text;
+  var values = sheet.getRange(2, 2, sheet.getLastRow(),sheet.getLastColumn()).getValues();
+for(var i = 0;i<values.length; i++){
+    
+    if(values[i][0] == userMsg ){
+      i=i+2;
+var Data1 = sheet.getRange(i,2).getValue();//name
+var Pic = sheet.getRange(i,3).getValue();//Picture
+
+      var result = {
+    "fulfillmentMessages": [
+  {
+    "platform": "line",
+    "type": 4,
+    "payload" : {
+      "line":  {
+        
+     "altText": "this is buttons template",
+     "type": "template",
+        
+    "template": {
+        
+      "text": "กรุณาเลือก",
+      "title": Data1,
+      "type": "buttons",
+      "thumbnailImageUrl": Pic,
+        
+        
+        
+      "actions": [
+        {
+          
+          "type": "message",
+          "label": "สรรพคุณ",
+          "text": "สรรพคุณ"
+          
+      
+        },
+        {
+          "label": "วิธีนำไปใช้",
+           "type": "message",
+          "text": "วิธีนำไปใช้"
+        },
+        {
+          "type": "message",
+          "label": "รายละเอียด",
+          "text": "รายละเอียด",
+   
+        
+        }
+      ]
+     
+    }
+    
+  }
+  }
+  }
+ ]
+}
+      
+    var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+    return replyJSON;
+}
+  }
+}
