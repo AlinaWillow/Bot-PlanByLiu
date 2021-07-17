@@ -1,9 +1,19 @@
 {
   "line": {
+    
+    "altText": "this is buttons template",
+    "type": "template",
+    
+
     "template": {
+      "text": "กรุณาเลือก",
+      "title": "ดีปลี",
+      "type": "buttons",
+      "thumbnailImageUrl": "https://www.img.in.th/images/7446ff360817a10aaafa18be5f43670b.png",
+      
+      
       "actions": [
-        {
-          
+        {     
           "type": "message",
           "label": "สรรพคุณ",
           "text": "ดีปลี-สรรพคุณ"
@@ -16,16 +26,12 @@
         {
           "type": "message",
           "label": "รายละเอียด",
-          "text": "ดีปลี-รายละเอียด"
-        
+          "text": "ดีปลี-รายละเอียด"        
         }
-      ],
-      "text": "กรุณาเลือก",
-      "title": "ดีปลี",
-      "type": "buttons",
-      "thumbnailImageUrl": "https://www.img.in.th/images/7446ff360817a10aaafa18be5f43670b.png"
-    },
-    "altText": "this is buttons template",
-    "type": "template"
+      ]
+      
+   
+       
+    }    
   }
 }
