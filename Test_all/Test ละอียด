@@ -20,6 +20,7 @@ for(var i = 0;i<values.length; i++){
 var Data1 = sheet.getRange(i,2).getValue();//name
 var Pic = sheet.getRange(i,3).getValue();//Picture
 
+   
 //คั้งรูปแบบการแสดงผล
       var result = {
     "fulfillmentMessages": [
@@ -27,6 +28,7 @@ var Pic = sheet.getRange(i,3).getValue();//Picture
     "platform": "line",
     "type": 4,
     "payload" : {
+//ข้อความที่จะแสดงผล
       "line":  {
         
      "altText": "this is buttons template",
@@ -53,9 +55,10 @@ var Pic = sheet.getRange(i,3).getValue();//Picture
  ]
 }
       }}}]}    
-      
+
+
 //----------------------------------------------------------------------------------------------
-/////////////////////////////
+
       var sheetName = sheet.getRange(i,4).getValue();
           sheet = ss.getSheetByName(sheetName);
           values = sheet.getRange(2, 2, sheet.getLastRow(),sheet.getLastColumn()).getValues();
@@ -67,13 +70,18 @@ var Pic = sheet.getRange(i,3).getValue();//Picture
       
      var Data2 = sheet.getRange(i,3).getValue();//สถานะ
      var result = { 
+     "fulfillmentMessages": [
+  {
+    "platform": "line",
+    "type": 4,
+    "payload" : {
        "line":  {
          "type": "text",
-         "text": Data2
+         "text": "สถานะ"
        }
-     }}}
-      
-/////////////////////////////      
+     }}]}
+     }}
+
 
 
 //แสดงผลจริง      
