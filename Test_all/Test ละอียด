@@ -1,0 +1,86 @@
+
+var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/14OBaxtkFxYuVOG5mEG-i0inD34-_Pv-8xCemqvFxlW0/edit");
+var sheet = ss.getSheetByName("sheet");
+function doPost(e) {
+
+//รับข้อมูลที่ user พิมพ์ 
+  var data = JSON.parse(e.postData.contents)
+  var userMsg = data.originalDetectIntentRequest.payload.data.message.text;
+//ค้นหาว่าคำที่พิมพ์ตรงกับแถวและหลักไหน
+  var values = sheet.getRange(2, 2, sheet.getLastRow(),sheet.getLastColumn()).getValues();
+  
+  
+for(var i = 0;i<values.length; i++){
+   
+    if(values[i][0] == userMsg ){
+      i=i+2;
+
+//--------------------------------------------------------------------------------      
+//กำหนดตัวแปรข้อมูลที่ต้องการแสดง      
+var Data1 = sheet.getRange(i,2).getValue();//name
+var Pic = sheet.getRange(i,3).getValue();//Picture
+
+//คั้งรูปแบบการแสดงผล
+      var result = {
+    "fulfillmentMessages": [
+  {
+    "platform": "line",
+    "type": 4,
+    "payload" : {
+      "line":  {
+        
+     "altText": "this is buttons template",
+     "type": "template",
+        
+    "template": {
+        
+      "text": "กรุณาเลือก",
+      "title": Data1,
+      "type": "buttons",
+      "thumbnailImageUrl": Pic,
+        
+ 
+      "actions": [
+        
+        {
+          "type": "message",
+          "label": "รายละเอียด",
+          "text": "รายละเอียด" ,  
+          
+        }
+  
+  
+ ]
+}
+      }}}]}    
+      
+//----------------------------------------------------------------------------------------------
+/////////////////////////////
+      var sheetName = sheet.getRange(i,4).getValue();
+          sheet = ss.getSheetByName(sheetName);
+          values = sheet.getRange(2, 2, sheet.getLastRow(),sheet.getLastColumn()).getValues();
+      
+      for(var i = 0;i<values.length; i++){
+   
+    if(values[i][0] == userMsg ){
+      i=i+2;
+      
+     var Data2 = sheet.getRange(i,3).getValue();//สถานะ
+     var result = { 
+       "line":  {
+         "type": "text",
+         "text": Data2
+       }
+     }}}
+      
+/////////////////////////////      
+
+
+//แสดงผลจริง      
+    var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+    return replyJSON;
+}
+  }
+}
+      
+      
