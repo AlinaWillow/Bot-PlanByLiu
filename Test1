@@ -21,11 +21,20 @@ for(var i = 0;i<values.length; i++){
 //กำหนดตัวแปรข้อมูลที่ต้องการแสดง      
 var Data1 = sheet.getRange(i,2).getValue();//name
 var Pic = sheet.getRange(i,3).getValue();//Picture
+      
+var DeState = sheet.getRange(i,2).getValue();//stat
+var DeColor = sheet.getRange(i,3).getValue();//colorPot
+var DeNum = sheet.getRange(i,2).getValue();//numberPot
+var DeDate = sheet.getRange(i,3).getValue();//plantDate
 
-   show(Data1,Pic);
+   
   
-
-
+      
+ //แสดงผลจริง      
+    var replyJSON = ContentService.createTextOutput(JSON.stringify( showMenu(Data1,Pic,DeState,DeColor,DeNum,DeDate))).setMimeType(ContentService.MimeType.JSON);
+    return replyJSON;
+ 
+    
 
 }
   }
@@ -33,7 +42,7 @@ var Pic = sheet.getRange(i,3).getValue();//Picture
 
 
 
-function show(a,b){
+function showMenu(a,b,x,y,z,i){
   
 //คั้งรูปแบบการแสดงผล
       var result = {
@@ -61,8 +70,10 @@ function show(a,b){
         {
           "type": "message",
           "label": "รายละเอียด",
-          "text": a 
+          "text": a,
           
+          var replyJSON = ContentService.createTextOutput(JSON.stringify(showDetail(a,x,y,z,i)).setMimeType(ContentService.MimeType.JSON);
+          return replyJSON;
         }
   
   
@@ -70,9 +81,72 @@ function show(a,b){
 }
       }}}]}
       
-      //แสดงผลจริง      
-    var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
-    return replyJSON;
+      return result;
       
+}
+
+function showDetail(name,state,color,numPot,plantDate){
+  
+    var resultDetail = {
+    "fulfillmentMessages": [
+  {
+    "platform": "line",
+    "type": 4,
+    "payload" : {
+    "line":  {
+      
+   "type": "flex",
+  "altText": "this is a flex message",
+  "contents": 
+      { "type": "bubble",
+        "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+        
+         {
+        "type": "text",
+        "text": name,
+        "weight": "bold",
+        "align": "center",
+        "color": "#0000ff"
+      },
+           {
+        "type": "text",
+        "text": "สถานะ : "+ state
+              },
+               {
+        "type": "text",
+        "text": "สีกระถาง : "+ color
+              },
+
+          
+             {
+        "type": "text",
+        "text": "จำนวนกระถาง : "+ numPot
+      },
+         
+                {
+        "type": "text",
+        "text": "วันที่ปลูก : "+ plantDate
+              }
+          
+
+        
+        ]
+
+      
+      
+      }
+
+      
+      
+    }
+        
+   }
+  }
+  }
+ ]
+}
 
 }
