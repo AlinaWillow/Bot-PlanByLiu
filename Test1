@@ -22,68 +22,22 @@ for(var i = 0;i<values.length; i++){
 var Data1 = sheet.getRange(i,2).getValue();//name
 var Pic = sheet.getRange(i,3).getValue();//Picture
       
-var DeState = sheet.getRange(i,2).getValue();//stat
-var DeColor = sheet.getRange(i,3).getValue();//colorPot
-var DeNum = sheet.getRange(i,2).getValue();//numberPot
-var DeDate = sheet.getRange(i,3).getValue();//plantDate
-
-   
-  
+var DeState = sheet.getRange(i,4).getValue();//stat
+var DeColor = sheet.getRange(i,5).getValue();//colorPot
+var DeNum = sheet.getRange(i,6).getValue();//numberPot
+var DeDate = sheet.getRange(i,7).getValue();//plantDate
       
+
  //แสดงผลจริง      
-    var replyJSON = ContentService.createTextOutput(JSON.stringify( showMenu(Data1,Pic,DeState,DeColor,DeNum,DeDate))).setMimeType(ContentService.MimeType.JSON);
+    var replyJSON = ContentService.createTextOutput(JSON.stringify(showMenu(Data1,Pic,DeState,DeColor,DeNum,DeDate))).setMimeType(ContentService.MimeType.JSON);
     return replyJSON;
- 
-    
+
 
 }
   }
 }
 
-
-
-function showMenu(a,b,x,y,z,i){
-  
-//คั้งรูปแบบการแสดงผล
-      var result = {
-    "fulfillmentMessages": [
-  {
-    "platform": "line",
-    "type": 4,
-    "payload" : {
-//ข้อความที่จะแสดงผล
-      "line":  {
-        
-     "altText": "this is buttons template",
-     "type": "template",
-        
-    "template": {
-        
-      "text": "กรุณาเลือก",
-      "title": a,
-      "type": "buttons",
-      "thumbnailImageUrl": b,
-        
- 
-      "actions": [
-        
-        {
-          "type": "message",
-          "label": "รายละเอียด",
-          "text": a,
-          
-          var replyJSON = ContentService.createTextOutput(JSON.stringify(showDetail(a,x,y,z,i)).setMimeType(ContentService.MimeType.JSON);
-          return replyJSON;
-        }
-  
-  
- ]
-}
-      }}}]}
-      
-      return result;
-      
-}
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 function showDetail(name,state,color,numPot,plantDate){
   
@@ -130,23 +84,73 @@ function showDetail(name,state,color,numPot,plantDate){
         "type": "text",
         "text": "วันที่ปลูก : "+ plantDate
               }
+   
+        ]}} }} } ]}
+    
+    return resultDetail;
+
+}
+
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+function showMenu(a,b,x,y,z,i){
+  
+  
+//คั้งรูปแบบการแสดงผล
+      var result = {
+    "fulfillmentMessages": [
+  {
+    "platform": "line",
+    "type": 4,
+    "payload" : {
+//ข้อความที่จะแสดงผล
+      "line":  {
+        
+     "altText": "this is buttons template",
+     "type": "template",
+        
+    "template": {
+        
+      "text": "กรุณาเลือก",
+      "title": a,
+      "type": "buttons",
+      "thumbnailImageUrl": b,
+        
+      
+      "actions": [
+        
+        {
+          "type": "message",
+          "label": "รายละเอียด",
+          "text": "รายละเอียด",             
           
-
-        
-        ]
-
-      
-      
-      }
-
-      
-      
-    }
-        
-   }
-  }
-  }
+        }       
  ]
+      
+}
+      }}}]}
+      
+     return result;
+  
+  
+   var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/14OBaxtkFxYuVOG5mEG-i0inD34-_Pv-8xCemqvFxlW0/edit");
+   var sheet = ss.getSheetByName("sheet");
+  
+    var data = JSON.parse(e.postData.contents);
+    var userMsg = data.originalDetectIntentRequest.payload.data.message.text;
+  // var values = sheet.getRange(2, 2, sheet.getLastRow(),sheet.getLastColumn()).getValues();
+
+   var TEST = sheet.getRange(1,8).getValue();//รายละเอียด
+ 
+  
+  if(TEST == userMsg){
+    
+     var replyJSON = ContentService.createTextOutput(JSON.stringify(showDetail(a,x,y,z,i))).setMimeType(ContentService.MimeType.JSON);
+     return replyJSON; 
+  }
+  
+ 
+      
 }
 
-}
