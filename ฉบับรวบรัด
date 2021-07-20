@@ -24,13 +24,24 @@ var Pic = sheet.getRange(i,3).getValue();//Picture
       
 var DeState = sheet.getRange(i,4).getValue();//stat
 var DeColor = sheet.getRange(i,5).getValue();//colorPot
-var DeNum = sheet.getRange(i,6).getValue();//numberPot
-var DeDate = sheet.getRange(i,7).getValue();//plantDate
-var showDate = Utilities.formatDate(new Date(DeDate), "GMT+7", "dd/MM/yyyy")
+var DeSize = sheet.getRange(i,6).getValue();//sizePot
+var DeNum = sheet.getRange(i,7).getValue();//numPot
       
+
+var DeDate = sheet.getRange(i,8).getValue();//plantDate    
+      if(DeDate == ""){
+      var showDate = "";
+      }
+      else{
+      var showDate = Utilities.formatDate(new Date(DeDate), "GMT+7", "dd/MM/yyyy")
+      }
+
+
+var DeBrand = sheet.getRange(i,9).getValue();//ยี่ห้อ
+var DeSoong = sheet.getRange(i,10).getValue();//ลักษณะซองหรือผล
      
  //แสดงผลจริง      
-    var replyJSON = ContentService.createTextOutput(JSON.stringify(showDetail(Name,Pic,DeState,DeColor,DeNum,showDate))).setMimeType(ContentService.MimeType.JSON);
+    var replyJSON = ContentService.createTextOutput(JSON.stringify(showDetail(Name,Pic,DeState,DeColor,DeSize,DeNum,showDate,DeBrand,DeSoong))).setMimeType(ContentService.MimeType.JSON);
     return replyJSON;
 
 }}  
@@ -40,7 +51,7 @@ var showDate = Utilities.formatDate(new Date(DeDate), "GMT+7", "dd/MM/yyyy")
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-function showDetail(name,pic,state,color,numPot,plantDate){
+function showDetail(name,pic,state,color,sizePot,numPot,plantDate,brand,soong){
   
     var resultDetail = {
     "fulfillmentMessages": [
@@ -62,6 +73,7 @@ function showDetail(name,pic,state,color,numPot,plantDate){
          {
         "type": "text",
         "text": name,
+         "size": "l",
         "weight": "bold",
         "align": "center",
         "color": "#0000ff"
@@ -79,13 +91,18 @@ function showDetail(name,pic,state,color,numPot,plantDate){
           },
            {
         "type": "text",
-        "text": "สถานะ : "+ state
+        "text": "สถานะ :     "+ state
               },
+         
                {
         "type": "text",
-        "text": "สีกระถาง : "+ color
+        "text": "สีกระถาง :    "+ color
               },
-
+  {
+        "type": "text",
+        "text": "ขนาดกระถาง : "+ sizePot
+      },
+         
           
              {
         "type": "text",
@@ -94,8 +111,21 @@ function showDetail(name,pic,state,color,numPot,plantDate){
          
                 {
         "type": "text",
-        "text": "วันที่ปลูก : "+ plantDate
-              }
+        "text": "วันที่ปลูก :    "+ plantDate
+              },
+                 {
+        "type": "text",
+        "text": "ยี่ห้อ :    "+ brand
+      },
+                {
+        "type": "text",
+        "text": "ลักษณะซอง/ผล :"
+      },
+             {
+        "type": "text",
+        "text": soong
+      }
+         
    
         ]}} }} } ]}
     
@@ -104,5 +134,68 @@ function showDetail(name,pic,state,color,numPot,plantDate){
 }
 
 
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+function showMenu(a,b,c){
+  
+  
+//คั้งรูปแบบการแสดงผล
+      var result = {
+    "fulfillmentMessages": [
+  {
+    "platform": "line",
+    "type": 4,
+    "payload" : {
+//ข้อความที่จะแสดงผล
+      "line":  {
+        
+     "altText": "this is buttons template",
+     "type": "template",
+        
+    "template": {
+        
+      "text": "กรุณาเลือก",
+      "title": a,
+      "type": "buttons",
+      "thumbnailImageUrl": b,
+        
+      
+      "actions": [
+        
+        {
+          "type": "message",
+          "label": "รายละเอียด",
+          "text":  "รายละเอียด"
+        }
+ ]
+      
+}
+      }}}]}
+      
+      
+     return result;
+ 
+}
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+function TestText(A){
+  
+  var resultTest = {
+   "fulfillmentMessages": [
+  {
+    "platform": "line",
+    "type": 4,
+    "payload" : {
+//ข้อความที่จะแสดงผล
+      "line":  {
+        "type": "text",
+        "text": A
+  
+      }}}]
+  }
+  
+  return resultTest;
+
+}
 
 
