@@ -1,0 +1,108 @@
+
+function doPost(e) {
+  
+  var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/14OBaxtkFxYuVOG5mEG-i0inD34-_Pv-8xCemqvFxlW0/edit");
+  var sheet = ss.getSheetByName("sheet");
+
+
+//รับข้อมูลที่ user พิมพ์ 
+  var data = JSON.parse(e.postData.contents);
+  var userMsg = data.originalDetectIntentRequest.payload.data.message.text;
+//ค้นหาว่าคำที่พิมพ์ตรงกับแถวและหลักไหน
+  var values = sheet.getRange(2, 2, sheet.getLastRow(),sheet.getLastColumn()).getValues();
+  
+  
+for(var i = 0;i<values.length; i++){
+   
+    if(values[i][0] == userMsg ){
+      i=i+2;
+
+//--------------------------------------------------------------------------------      
+//กำหนดตัวแปรข้อมูลที่ต้องการแสดง      
+var Name = sheet.getRange(i,2).getValue();//name
+var Pic = sheet.getRange(i,3).getValue();//Picture
+      
+var DeState = sheet.getRange(i,4).getValue();//stat
+var DeColor = sheet.getRange(i,5).getValue();//colorPot
+var DeNum = sheet.getRange(i,6).getValue();//numberPot
+var DeDate = sheet.getRange(i,7).getValue();//plantDate
+var showDate = Utilities.formatDate(new Date(DeDate), "GMT+7", "dd/MM/yyyy")
+      
+     
+ //แสดงผลจริง      
+    var replyJSON = ContentService.createTextOutput(JSON.stringify(showDetail(Name,Pic,DeState,DeColor,DeNum,showDate))).setMimeType(ContentService.MimeType.JSON);
+    return replyJSON;
+
+}}  
+    
+}
+
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+function showDetail(name,pic,state,color,numPot,plantDate){
+  
+    var resultDetail = {
+    "fulfillmentMessages": [
+  {
+    "platform": "line",
+    "type": 4,
+    "payload" : {
+    "line":  {
+      
+   "type": "flex",
+  "altText": "this is a flex message",
+  "contents": 
+      { "type": "bubble",
+        "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+        
+         {
+        "type": "text",
+        "text": name,
+        "weight": "bold",
+        "align": "center",
+        "color": "#0000ff"
+      },
+          
+          { 
+       
+           "type": "image",
+            "url": pic,
+            "size": "full",
+            "aspectRatio": "1.51:1",
+            "aspectMode": "fit"
+            
+
+          },
+           {
+        "type": "text",
+        "text": "สถานะ : "+ state
+              },
+               {
+        "type": "text",
+        "text": "สีกระถาง : "+ color
+              },
+
+          
+             {
+        "type": "text",
+        "text": "จำนวนกระถาง : "+ numPot
+      },
+         
+                {
+        "type": "text",
+        "text": "วันที่ปลูก : "+ plantDate
+              }
+   
+        ]}} }} } ]}
+    
+    return resultDetail;
+
+}
+
+
+
+
