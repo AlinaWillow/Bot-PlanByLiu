@@ -88,7 +88,7 @@ function showDetail(name,pic,state,color,sizePot,numPot,plantDate,brand,soong){
          { 
        
            "type": "image",
-            "url": "https://github.com/AlinaWillow/Bot-PlanByLiu/blob/main/Pic_plant/%E0%B8%94%E0%B8%B5%E0%B8%9B%E0%B8%A5%E0%B8%B5.png?raw=true",
+            "url": pic,
             "size": "full",
             "aspectRatio": "1.51:1",
             "aspectMode": "fit"
