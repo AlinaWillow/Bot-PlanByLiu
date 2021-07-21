@@ -40,19 +40,7 @@ var DeDate = sheet.getRange(i,8).getValue();//plantDate
 var DeBrand = sheet.getRange(i,9).getValue();//ยี่ห้อ
 var DeSoong = sheet.getRange(i,10).getValue();//ลักษณะซองหรือผล
       
-//function กันช่องที่ไม่มีข้อมูล  
-      if(DeState !=""||DeColor!=""||DeSize!=""||DeNum!=""||DeBrand!=""||DeSoong!=""){
-      }
-      else{
-        var DeState = "ไม่มีข้อมูล";
-        var DeColor = "ไม่มีข้อมูล";
-        var DeSize = "ไม่มีข้อมูล";
-        var DeNum = "ไม่มีข้อมูล";
-        var DeBrand = "ไม่มีข้อมูล";
-        var DeSoong = "ไม่มีข้อมูล";
-      }
-      
-     
+  
  //แสดงผลจริง      
     var replyJSON = ContentService.createTextOutput(JSON.stringify(showDetail(Name,Pic,DeState,DeColor,DeSize,DeNum,showDate,DeBrand,DeSoong))).setMimeType(ContentService.MimeType.JSON);
     return replyJSON;
@@ -200,24 +188,5 @@ function showMenu(a,b,c){
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-function TestText(A){
-  
-  var resultTest = {
-   "fulfillmentMessages": [
-  {
-    "platform": "line",
-    "type": 4,
-    "payload" : {
-//ข้อความที่จะแสดงผล
-      "line":  {
-        "type": "text",
-        "text": A
-  
-      }}}]
-  }
-  
-  return resultTest;
-
-}
 
 
