@@ -1,0 +1,214 @@
+
+function doPost(e) {
+  
+  var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/14OBaxtkFxYuVOG5mEG-i0inD34-_Pv-8xCemqvFxlW0/edit");
+  var sheet = ss.getSheetByName("sheet");
+
+
+//รับข้อมูลที่ user พิมพ์ 
+  var data = JSON.parse(e.postData.contents);
+  var userMsg = data.originalDetectIntentRequest.payload.data.message.text;
+//ค้นหาว่าคำที่พิมพ์ตรงกับแถวและหลักไหน
+  var values = sheet.getRange(2, 2, sheet.getLastRow(),sheet.getLastColumn()).getValues();
+  
+  
+for(var i = 0;i<values.length; i++){
+   
+    if(values[i][0] == userMsg ){
+      i=i+2;
+
+//--------------------------------------------------------------------------------      
+//กำหนดตัวแปรข้อมูลที่ต้องการแสดง      
+var Name = sheet.getRange(i,2).getValue();//name
+var Pic = sheet.getRange(i,3).getValue();//Picture
+      
+var DeState = sheet.getRange(i,4).getValue();//stat
+var DeColor = sheet.getRange(i,5).getValue();//colorPot
+var DeSize = sheet.getRange(i,6).getValue();//sizePot
+var DeNum = sheet.getRange(i,7).getValue();//numPot
+      
+
+var DeDate = sheet.getRange(i,8).getValue();//plantDate    
+      if(DeDate == ""){
+      var showDate = "";
+      }
+      else{
+      var showDate = Utilities.formatDate(new Date(DeDate), "GMT+7", "dd/MM/yyyy")
+      }
+
+
+var DeBrand = sheet.getRange(i,9).getValue();//ยี่ห้อ
+var DeSoong = sheet.getRange(i,10).getValue();//ลักษณะซองหรือผล
+     
+ //แสดงผลจริง      
+    var replyJSON = ContentService.createTextOutput(JSON.stringify(showDetail(Name,Pic,DeState,DeColor,DeSize,DeNum,showDate,DeBrand,DeSoong))).setMimeType(ContentService.MimeType.JSON);
+    return replyJSON;
+
+}}  
+    
+}
+
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+function showDetail(name,pic,state,color,sizePot,numPot,plantDate,brand,soong){
+  
+    var resultDetail = {
+    "fulfillmentMessages": [
+  {
+    "platform": "line",
+    "type": 4,
+    "payload" : {
+    "line":  {
+      
+   "type": "flex",
+  "altText": "this is a flex message",
+  "contents": 
+      { "type": "bubble",
+        "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+        
+         {
+        "type": "text",
+        "text": name,
+          "size": "lg",
+        "weight": "bold",
+        "align": "center",
+        "color": "#000000"
+      },
+         
+          { 
+       
+           "type": "image",
+            "url": pic,
+            "size": "full",
+            "aspectRatio": "1.51:1",
+            "aspectMode": "fit"
+            
+
+          },
+           {
+        "type": "text",
+        "text": "สถานะ :",
+            "weight": "bold",
+                "color": "#0A0000FF",
+                "align": "start",
+                "margin": "sm"   
+          
+              },
+          {
+            "type" : "text",
+			 "text": state,
+            "weight": "regular",
+                "size": "sm",
+                "color": "#AAAAAA",
+                "align": "center"
+              },
+         
+               {
+        "type": "text",
+        "text": "สีกระถาง :    "+ color
+              },
+  {
+        "type": "text",
+        "text": "ขนาดกระถาง : "+ sizePot
+      },
+         
+          
+             {
+        "type": "text",
+        "text": "จำนวนกระถาง : "+ numPot
+      },
+         
+                {
+        "type": "text",
+        "text": "วันที่ปลูก :    "+ plantDate
+              },
+                 {
+        "type": "text",
+        "text": "ยี่ห้อ :    "+ brand
+      },
+                {
+        "type": "text",
+        "text": "ลักษณะซอง/ผล :"
+      },
+             {
+        "type": "text",
+        "text": soong
+      }
+         
+   
+        ]}} }} } ]}
+    
+    return resultDetail;
+
+}
+
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+function showMenu(a,b,c){
+  
+  
+//คั้งรูปแบบการแสดงผล
+      var result = {
+    "fulfillmentMessages": [
+  {
+    "platform": "line",
+    "type": 4,
+    "payload" : {
+//ข้อความที่จะแสดงผล
+      "line":  {
+        
+     "altText": "this is buttons template",
+     "type": "template",
+        
+    "template": {
+        
+      "text": "กรุณาเลือก",
+      "title": a,
+      "type": "buttons",
+      "thumbnailImageUrl": b,
+        
+      
+      "actions": [
+        
+        {
+          "type": "message",
+          "label": "รายละเอียด",
+          "text":  "รายละเอียด"
+        }
+ ]
+      
+}
+      }}}]}
+      
+      
+     return result;
+ 
+}
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+function TestText(A){
+  
+  var resultTest = {
+   "fulfillmentMessages": [
+  {
+    "platform": "line",
+    "type": 4,
+    "payload" : {
+//ข้อความที่จะแสดงผล
+      "line":  {
+        "type": "text",
+        "text": A
+  
+      }}}]
+  }
+  
+  return resultTest;
+
+}
+
+
