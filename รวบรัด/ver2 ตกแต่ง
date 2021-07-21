@@ -109,7 +109,6 @@ function showDetail(name,pic,state,color,sizePot,numPot,plantDate,brand,soong){
                 "weight": "regular",
                 "color": "#0A0000FF",
                 "size": "sm",
-                "color": "#AAAAAA",
                 "align": "center"
               }]
          },
@@ -132,7 +131,6 @@ function showDetail(name,pic,state,color,sizePot,numPot,plantDate,brand,soong){
                 "weight": "regular",
                 "color": "#0A0000FF",
                 "size": "sm",
-                "color": "#AAAAAA",
                 "align": "center"
               }]
          },
@@ -155,7 +153,6 @@ function showDetail(name,pic,state,color,sizePot,numPot,plantDate,brand,soong){
                 "weight": "regular",
                 "color": "#0A0000FF",
                 "size": "sm",
-                "color": "#AAAAAA",
                 "align": "center"
               }]
          },
@@ -178,7 +175,6 @@ function showDetail(name,pic,state,color,sizePot,numPot,plantDate,brand,soong){
                 "weight": "regular",
                 "color": "#0A0000FF",
                 "size": "sm",
-                "color": "#AAAAAA",
                 "align": "center"
               }]
          },
@@ -201,7 +197,6 @@ function showDetail(name,pic,state,color,sizePot,numPot,plantDate,brand,soong){
                 "weight": "regular",
                 "color": "#0A0000FF",
                 "size": "sm",
-                "color": "#AAAAAA",
                 "align": "center"
               }]
          },
@@ -224,7 +219,6 @@ function showDetail(name,pic,state,color,sizePot,numPot,plantDate,brand,soong){
                 "weight": "regular",
                 "color": "#0A0000FF",
                 "size": "sm",
-                "color": "#AAAAAA",
                 "align": "center"
               }]
          },
@@ -247,7 +241,6 @@ function showDetail(name,pic,state,color,sizePot,numPot,plantDate,brand,soong){
                 "weight": "regular",
                 "color": "#0A0000FF",
                 "size": "sm",
-                "color": "#AAAAAA",
                 "align": "center"
               }]
          }
